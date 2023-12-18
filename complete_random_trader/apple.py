@@ -5,7 +5,8 @@ import random
 import math
 
 # start parameters
-cash = 100000
+start_cash = 100000
+cash = start_cash
 current_timestamp = datetime.datetime.strptime('2023-12-11 09:30:00', '%Y-%m-%d %H:%M:%S')
 current_timestamp = pytz.timezone('America/New_York').localize(current_timestamp)
 # stop_timestamp = '2023-12-15 15:59:00-05:00'
@@ -66,28 +67,23 @@ def trade(minutes: int):
 def try_trade():
     # choose whether to make a trade or not
     if random.choices([True, False], weights)[0]:
-        # print(f'Making trade at {current_timestamp}')
-        
-    # choose minutes to hold position
+        # choose minutes to hold position
         trade(random.randint(minimal_position_duration, maximal_position_duration))
 
-def print_outstanding_trades():
+def print_profit_loss():
+    global cash
     global trades
     global current_timestamp
 
+    capital = cash - start_cash
     current_stock_price = tickerDf.loc[current_timestamp, 'Open']
-
-    buy_result = 0
-    current_result = 0
     for trade in trades:
-        buy_result = buy_result + trade[3]
-        current_result = current_result + (current_stock_price * trade[1])
-    print(f"Outstanding trades are bought for: ${buy_result:,.2f}")
-    print(f"Outstanding trades are currently worth: ${current_result:,.2f}")
+        capital += current_stock_price * trade[1]
+    print(f"Total profit/loss is: ${capital:,.2f}")
 
 for i in range(10):
     current_index = 0
-    cash = 100000
+    cash = start_cash
     current_timestamp = datetime.datetime.strptime('2023-12-11 09:30:00', '%Y-%m-%d %H:%M:%S')
     while current_timestamp != stop_timestamp:
         # Get the current timestamp from the DataFrame using the current index
@@ -105,5 +101,5 @@ for i in range(10):
             break
 
     print()
-    print(f"Cash: ${cash:,.2f}")
-    print_outstanding_trades()
+    # print(f"Cash: ${cash:,.2f}")
+    print_profit_loss()
