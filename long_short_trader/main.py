@@ -12,7 +12,7 @@ closed_positions = []
 cash = 100000
 current_index = 1
 
-long_target = 1.03
+long_target = 1.003
 short_target = 0.97
 
 long_stoploss = 0.97
@@ -55,14 +55,16 @@ def try_open_new_position():
     if new_long_price != 0:
         stoploss_price = current_stock_price * long_stoploss
         new_position = Position(ticker=tickerSymbol, amount=5, start_timestamp=current_timestamp, start_price=current_stock_price, target_price=new_long_price, stoploss_price=stoploss_price, type='long')
-        open_positions.append(new_position)
-        cash = cash - new_position.amount * current_stock_price
+        if len(open_positions) < 3:
+            open_positions.append(new_position)
+            cash = cash - new_position.amount * current_stock_price
 
 def close_position(position: Position):
     global open_positions
     global closed_position
     global current_index
     global tickerDf
+    global cash
 
     open_positions.remove(position)
     closed_positions.append(position)
@@ -75,8 +77,13 @@ def close_position(position: Position):
 
 def check_open_positions():
     global open_positions
+    global current_index
+    
+    current_timestamp = tickerDf.index[current_index]
+    current_stock_price = tickerDf.loc[current_timestamp, 'Open']
+    
     for position in open_positions.copy():
-        if position.try_action == 'SELL':
+        if position.try_action(current_stock_price) == 'SELL':
             close_position(position)
 
     # Do we need new positions?
@@ -88,3 +95,5 @@ while current_index < len(tickerDf):
     current_index += 1
 
 print(f"Cash: ${cash:,.2f}")
+print(f'Open positions: {len(open_positions)}')
+print(f'Closed positions: {len(closed_positions)}')
