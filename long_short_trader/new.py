@@ -56,7 +56,7 @@ while current_index < len(df):
     for position in open_positions:
         # Close positions met winst of verlies
         if position['type'] == 'long':
-            if current_stock_price >= position['price'] * 1.03:
+            if current_stock_price >= position['price'] * 1.003:
                 close_position(current_timestamp, current_stock_price, position)
             elif current_stock_price <= position['price'] * 0.97:
                 close_position(current_timestamp, current_stock_price, position)
@@ -71,12 +71,15 @@ while current_index < len(df):
             open_new_long_position = True
         elif position['type'] == 'short' and current_stock_price <= position['price'] * 0.985:
             open_new_short_position = True
-    
+
     # Open nieuwe posities
     if open_new_long_position and len(open_positions) < max_positions and cash >= max_position_size:
         open_position(current_timestamp, current_stock_price, 'long')
     elif open_new_short_position and len(open_positions) < max_positions and cash >= max_position_size:
         open_position(current_timestamp, current_stock_price, 'short')
+
+    if len(open_positions) == 0:
+        open_position(current_timestamp, current_stock_price, 'long')
 
     current_index += 1
 
