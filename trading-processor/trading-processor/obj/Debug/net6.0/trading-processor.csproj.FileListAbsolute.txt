@@ -3,7 +3,6 @@ C:\Development\research\Stock-trading-bot-research\trading-processor\trading-pro
 C:\Development\research\Stock-trading-bot-research\trading-processor\trading-processor\bin\Debug\net6.0\trading-processor.runtimeconfig.json
 C:\Development\research\Stock-trading-bot-research\trading-processor\trading-processor\bin\Debug\net6.0\trading-processor.dll
 C:\Development\research\Stock-trading-bot-research\trading-processor\trading-processor\bin\Debug\net6.0\trading-processor.pdb
-C:\Development\research\Stock-trading-bot-research\trading-processor\trading-processor\obj\Debug\net6.0\trading-processor.csproj.AssemblyReference.cache
 C:\Development\research\Stock-trading-bot-research\trading-processor\trading-processor\obj\Debug\net6.0\trading-processor.GeneratedMSBuildEditorConfig.editorconfig
 C:\Development\research\Stock-trading-bot-research\trading-processor\trading-processor\obj\Debug\net6.0\trading-processor.AssemblyInfoInputs.cache
 C:\Development\research\Stock-trading-bot-research\trading-processor\trading-processor\obj\Debug\net6.0\trading-processor.AssemblyInfo.cs
